@@ -24,6 +24,10 @@ FROM quay.io/fedora/fedora-bootc:42
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
+ENV TARGET_PLATFORM=$TARGET_PLATFORM
+ENV TARGET_DESKTOP=$TARGET_DESKTOP
+ENV TARGET_NVIDIA=$TARGET_NVIDIA
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
