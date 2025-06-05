@@ -1,6 +1,14 @@
 #!/bin/bash
 
 set -ouex pipefail
+export env_debug="true"
+debug () {
+    if [ "$env_debug" = "true" ];
+    then
+        echo $1
+    fi
+}
+
 
 ### Install packages
 
@@ -23,26 +31,29 @@ dnf5 install -y tmux
 
 systemctl enable podman.socket
 
+debug "Pre base packages"
 source /ctx/05_base_packages.sh
 
-if [ "$TARGET_PLATFORM" = "server" ];
+if [ "${TARGET_PLATFORM}" = "server" ];
 then
     source /ctx/10s_server_config.sh
 fi
 
-if [ "$TARGET_PLATFORM" = "workstation" ];
+if [ "${TARGET_PLATFORM}" = "workstation" ];
 then
+    debug "Inside if workstation"
     if [ "$TARGET_DESKTOP" = "gnome" ];
     then
+        debug "Pre gnome setup"
         source /ctx/10w_gnome_setup.sh
     fi
 
-    if [ "$TARGET_DESKTOP" = "kde" ];
+    if [ "${TARGET_DESKTOP}" = "kde" ];
     then
         source /ctx/10w_kde_setup.sh
     fi
 
-    if [ "$TARGET_DESKTOP" = "cosmic" ];
+    if [ "${TARGET_DESKTOP}" = "cosmic" ];
     then
         source /ctx/10w_cosmic_setup.sh
     fi
@@ -50,7 +61,7 @@ then
     source /ctx/15w_desktop_apps.sh
 fi
 
-if [ "$TARGET_NVIDIA" = "true" ];
+if [ "${TARGET_NVIDIA}" = "true" ];
 then
     source /ctx/20_install_nvidia.sh
 fi
