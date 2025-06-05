@@ -1,9 +1,15 @@
+# ENV VARs
+ARG TARGET_PLATFORM="${TARGET_PLATFORM:-workstation}" # alt server
+ARG TARGET_DESKTOP="${TARGET_DESKTOP:-gnome}" # alt kde cosmic
+ARG TARGET_NVIDIA="${TARGET_NVIDIA:-false}" # or true
+
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM ghcr.io/ublue-os/bazzite:stable
+#FROM ghcr.io/ublue-os/bazzite:stable
+FROM quay.io/fedora/fedora-bootc:42
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
@@ -22,7 +28,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build.sh && \
+    /ctx/0_build.sh && \
     ostree container commit
     
 ### LINTING
