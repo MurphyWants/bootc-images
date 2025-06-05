@@ -1,4 +1,4 @@
 # Everything needed (include the batteries)
-dnf install ansible btop
+dnf install -y ansible btop
 
 # ZFS

@@ -1,1 +1,1 @@
-dnf install steam
+dnf install -y steam 

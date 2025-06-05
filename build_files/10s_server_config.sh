@@ -1,1 +1,1 @@
-dnf install nginx
+dnf install -y nginx
