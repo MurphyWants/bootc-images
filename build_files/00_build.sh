@@ -1,11 +1,12 @@
 #!/bin/bash
 
-set -ouex pipefail
-export env_debug="true"
+#set -ouex pipefail
+
+export env_debug="false"
 debug () {
     if [ "$env_debug" = "true" ];
     then
-        echo $1
+        echo "DEBUG: $1"
     fi
 }
 
@@ -32,6 +33,10 @@ dnf5 install -y tmux
 systemctl enable podman.socket
 
 debug "Pre base packages"
+debug "TARGET_PLATFORM: ${TARGET_PLATFORM}"
+debug "TARGET_DESKTOP: ${TARGET_DESKTOP}"
+debug "TARGET_NVIDIA: ${TARGET_NVIDIA}"
+
 source /ctx/05_base_packages.sh
 
 if [ "${TARGET_PLATFORM}" = "server" ];
