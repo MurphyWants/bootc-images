@@ -70,3 +70,9 @@ if [ "${TARGET_NVIDIA}" = "true" ];
 then
     source /ctx/20_install_nvidia.sh
 fi
+
+debug "Kernel Version: $(uname -a)"
+debug "Kernel version: $(rpm -q --qf "%{VERSION}-%{RELEASE}" kernel)"
+
+# From https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/using_image_mode_for_rhel_to_build_deploy_and_manage_operating_systems/managing-rhel-bootc-images
+RUN set -x; kver=$(cd /usr/lib/modules && echo *); dracut -vf /usr/lib/modules/$kver/initramfs.img $kver
